@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Letter and Countdown</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #000;
+            color: #fff;
+        }
+        #letter {
+            font-size: 5rem;
+            margin-bottom: 50px;
+        }
+        #timer {
+            font-size: 7rem;
+        }
+    </style>
+</head>
+<body>
+    <div id="letter">Press Space</div>
+    <div id="timer">30</div>
+
+    <script>
+        const alphabet = "ABCDEFGHIJLMNOPRSTUV";
+        const letterDiv = document.getElementById("letter");
+        const timerDiv = document.getElementById("timer");
+
+        let countdownInterval;
+
+        function getRandomLetter() {
+            const randomIndex = Math.floor(Math.random() * alphabet.length);
+            return alphabet[randomIndex];
+        }
+
+        function startCountdown() {
+            let timeLeft = 30;
+            timerDiv.textContent = timeLeft;
+
+            clearInterval(countdownInterval);
+
+            countdownInterval = setInterval(() => {
+                timeLeft--;
+                timerDiv.textContent = timeLeft;
+
+                if (timeLeft <= 0) {
+                    clearInterval(countdownInterval);
+                    timerDiv.textContent = "Time's up!";
+                }
+            }, 1000);
+        }
+
+        document.addEventListener("keydown", (event) => {
+            if (event.code === "Space") {
+                event.preventDefault(); // Prevent scrolling
+                letterDiv.textContent = getRandomLetter();
+                startCountdown();
+            }
+        });
+    </script>
+</body>
+</html>
